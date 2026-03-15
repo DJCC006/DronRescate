@@ -16,7 +16,9 @@ struct ObjetoDetectado{
 class mapeoModule: public QObject{
     Q_OBJECT
 
-
+signals:
+    void datoCambiado(int id, QString texto);
+    void labelCambiado(QString texto);
 
 private:
     int cuadrante[3][3];
@@ -35,6 +37,14 @@ public:
     int getTotal();
 
     void printTableroConsole();
+
+    QString generarTexto(int id);
+
+    void actualizarGUI();
+
+    string obtMainCuadrante();
+
+    void actualizarMainCuadrante();
 
 };
 

@@ -13,7 +13,7 @@ void dibujarInterfaz(cv::Mat& frame, mapeoModule& mapa, const vector<ObjetoDetec
 
 int main(int argc, char *argv[])
 {
-    // QApplication a(argc, argv);
+     QApplication a(argc, argv);
     // MainWindow w;
     // w.show();
     // return a.exec();
@@ -24,8 +24,22 @@ int main(int argc, char *argv[])
          "model/coco.names"
     );
 
+
+
      mapeoModule mapa;
      guiModule gui;
+
+
+
+     //realizar conecciones
+     QObject::connect(&mapa, &mapeoModule::datoCambiado,
+                     &gui, &guiModule::actualizarBotones);
+
+     QObject::connect(&mapa, &mapeoModule::labelCambiado,
+                     &gui, &guiModule::actualizarPrioridad);
+
+
+
 
      gui.show();
      cv::VideoCapture cap(0);
@@ -55,6 +69,9 @@ int main(int argc, char *argv[])
          }
 
          dibujarInterfaz(frame, mapa, detecciones);
+
+         mapa.actualizarGUI();
+         mapa.actualizarMainCuadrante();
 
          cv::imshow("CAMARA DE CONTROL - TESTEO", frame);
 

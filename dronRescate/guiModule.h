@@ -12,6 +12,13 @@ class guiModule : public QWidget{
 public:
     explicit guiModule(QWidget *parent =nullptr);
 
+
+public slots:
+    void actualizarBotones(int indice, QString nuevoTexto);
+
+    void actualizarPrioridad(QString newPrioridad);
+
+
 private:
     QList<QPushButton*> listaBotones;
 
