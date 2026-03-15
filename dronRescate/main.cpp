@@ -4,6 +4,7 @@
 #include <vector>
 #include "visionModule.h"
 #include "mapeoModule.h"
+#include "guiModule.h"
 #include <QApplication>
 
 using namespace std;
@@ -24,8 +25,9 @@ int main(int argc, char *argv[])
     );
 
      mapeoModule mapa;
+     guiModule gui;
 
-
+     gui.show();
      cv::VideoCapture cap(0);
 
      if(!cap.isOpened()){
