@@ -88,7 +88,7 @@ vector<ObjetoDetectado> visionModule::detectar(cv::Mat &frame){
 
             float confidence = objectness * bestScore;
 
-            if(isnan(confidence) || isinf(confidence))
+            if(std::isnan(confidence) || std:: isinf(confidence))
                 continue;
 
             cout<<"Confianza detectada: "<<confidence<<endl;

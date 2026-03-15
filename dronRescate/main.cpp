@@ -12,7 +12,7 @@ void dibujarInterfaz(cv::Mat& frame, mapeoModule& mapa, const vector<ObjetoDetec
 
 int main(int argc, char *argv[])
 {
-     QApplication a(argc, argv);
+    // QApplication a(argc, argv);
     // MainWindow w;
     // w.show();
     // return a.exec();
@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
      while(true){
          cap>> frame;
 
-         if(frame.empy()) break;
+         if(frame.empty()) break;
 
          mapa.reset();
 
@@ -72,14 +72,20 @@ void dibujarInterfaz(cv::Mat& frame, mapeoModule& mapa, const vector<ObjetoDetec
 
     //dibujado de cuadrado alrededor de objeto detectado
     for(const auto& obj: detecciones){
-        if(obj.tipo== "Personas"){
-            int box_width = 100;
-            int box_height = 150;
+        if(obj.tipo == "Persona"){
+            int box_width =100;
+            int box_height =150;
 
-            cv::Point top_left(obj.x - box_width/2, obj.y - box_height/2);
-            cv::Point bottom_right(obj.x + box_width, obj.y + box_height/2);
+            cv::Point top_left(obj.x - box_width/2, obj.y- box_height/2);
+            cv::Point bottom_right(obj.x+box_width/2, obj.y+box_height/2);
 
-            cv::rectangle(frame, top_left, bottom_right, cv::Scalar(0,255,0),1);
+            //dibujar rectangulo
+            cv::rectangle(frame, top_left, bottom_right, cv::Scalar(0,255,0),2);
+
+            //poner etiqueta encima del rectangulo
+            cv::putText(frame, obj.tipo,
+                        cv::Point(top_left.x, top_left.y-10),
+                        cv::FONT_HERSHEY_COMPLEX, 0.5, cv::Scalar(0,255,0),1);
         }
     }
 
@@ -87,7 +93,7 @@ void dibujarInterfaz(cv::Mat& frame, mapeoModule& mapa, const vector<ObjetoDetec
     //Dibujado de grid con objetos detectados
     for(int i=0; i<3; i++){
         for(int j=0; j<3; j++){
-            cv::Rect rect(j * (w/3), i*(h/3), w/3, h/3);
+            cv::Rect rect(j * (weight/3), i*(height/3), weight/3, height/3);
             cv::rectangle(frame, rect, cv::Scalar(200,200,200),1);
 
 
@@ -98,7 +104,7 @@ void dibujarInterfaz(cv::Mat& frame, mapeoModule& mapa, const vector<ObjetoDetec
 
                 string texto = "Personas: "+to_string(conteo);
                 cv::putText(frame, texto,
-                            cv::Point(j*(w/3)+10, i*(h/3)+30),
+                            cv::Point(j*(weight/3)+10, i*(height/3)+30),
                             cv::FONT_HERSHEY_COMPLEX, 0.7, cv::Scalar(0,0,255),2);
             }
         }
